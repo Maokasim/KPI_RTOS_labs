@@ -97,7 +97,7 @@ int main(void)
   MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
   int32_t adcValue;
-  HAL_ADC_Start(&hdac1);
+  HAL_ADC_Start(&hadc1);
 
   /* USER CODE END 2 */
 
@@ -105,9 +105,9 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  if(HAL_ADC_PollForConversion(&hdac1, HAL_MAX_DELAY) == HAL_OK)
+	  if(HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY) == HAL_OK)
 	  {
-		  adcValue = HAL_ADC_GetValue(&hdac1);
+		  adcValue = HAL_ADC_GetValue(&hadc1);
 		  //converting to voltage
 		  float voltage = (adcValue * 3.3f)/4096.0f;
 		  if(voltage > 2.5f)
