@@ -3,7 +3,9 @@
   ******************************************************************************
   * @file           : main.c
   * @brief          : LAB work 2 for KPI RTOS course
-  * Variant 2, task: led 1 blinking freq 2Hz, pulse time 100ms, led 2 displays button state
+  * Variant 2, task:
+  * freeRtos task1: led 1 blinking freq 2Hz, pulse time 100ms,
+  * freeRtos task2: led 2 displays button state
   * CONNECTIONS
   * PA9 - led2
   * PA10 - led1
@@ -46,13 +48,6 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-/* Definitions for defaultTask */
-osThreadId_t defaultTaskHandle;
-const osThreadAttr_t defaultTask_attributes = {
-  .name = "defaultTask",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityBelowNormal,
-};
 /* Definitions for BlinkLed1 */
 osThreadId_t BlinkLed1Handle;
 const osThreadAttr_t BlinkLed1_attributes = {
@@ -74,7 +69,6 @@ const osThreadAttr_t LedBtn_attributes = {
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-void StartDefaultTask(void *argument);
 void StartBlinkLed1(void *argument);
 void StartLedBtn(void *argument);
 
@@ -140,8 +134,6 @@ int main(void)
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
-  /* creation of defaultTask */
-  defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
 
   /* creation of BlinkLed1 */
   BlinkLed1Handle = osThreadNew(StartBlinkLed1, NULL, &BlinkLed1_attributes);
@@ -260,23 +252,7 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE END 4 */
 
-/* USER CODE BEGIN Header_StartDefaultTask */
-/**
-  * @brief  Function implementing the defaultTask thread.
-  * @param  argument: Not used
-  * @retval None
-  */
-/* USER CODE END Header_StartDefaultTask */
-void StartDefaultTask(void *argument)
-{
-  /* USER CODE BEGIN 5 */
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(100);
-  }
-  /* USER CODE END 5 */
-}
+
 
 /* USER CODE BEGIN Header_StartBlinkLed1 */
 /**
