@@ -97,7 +97,7 @@ int main(void)
   MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
   int32_t adcValue;
-  HAL_ADC_Start(&hadc1);
+
 
   /* USER CODE END 2 */
 
@@ -105,11 +105,12 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  HAL_ADC_Start(&hadc1);
 	  if(HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY) == HAL_OK)
 	  {
 		  adcValue = HAL_ADC_GetValue(&hadc1);
 		  //converting to voltage
-		  float voltage = (adcValue * 3.3f)/4096.0f;
+		  float voltage = (adcValue * 3.3f)/4000.0f;
 		  if(voltage > 2.5f)
 		  {
 			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
@@ -117,6 +118,7 @@ int main(void)
 			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET);
 		  }
 	  }
+	  HAL_Delay(100);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
